@@ -1,0 +1,26 @@
+------Deploying ASP .NET Core Web API + MVC + SQL Database on Azure Paas Service----------
+Step 1: Creating a SQL Database in Azure, Exporting the SQL Database from local server and Importing into Azure Database   Server
+      Sign in into your azure portal. First Create a resource group under which we will be creating all our resources.
+      Create a SQL Database Server under the resource group with SQL authentication.
+      Open SQL Management Studio and open the local DB.
+      Right Click on the Db and click on “Export as Data Tier Application” and store the file with .bacpac extension in the local disc. 
+      The Azure Database is connected into SSMS by providing SQL authentication.
+      The locally exported .bacpac file is imported by right clicking on the “Databases” under Azure Database and then clicking on “Import Data Tier Application”
+      The Database will be then Updated in Azure Database.
+
+Step 2: Creating App Service in Azure for deploying Web API 
+      Next, we need to create an App Service in azure.
+      In Azure the App service is created using the technology stack as used for creating the API (.NET Version)
+      After opening Visual Studio right-click on the project, then publish is selected.
+      In the new dialog box, the corresponding app service and database (azure) is selected and then the publish button is pressed to publish the API/backend in Azure.
+
+Step 3: Creating App Service for deploying MVC/Frontend
+      For Deploying MVC we need to create an App Service in azure.
+      In Azure the App service is created using the technology stack as used for creating.
+      After Opening Visual Studio, the base URLs are changed as per the API URL in Azure.
+      After opening Visual Studio right-click on the project, then publish is selected.
+      In the new dialog box, the corresponding app service and database (azure) is selected and then the publish button is pressed to publish the API/backend in Azure.
+
+
+
+
