@@ -1,0 +1,24 @@
+1.Training Case Study Documents (HLD, LLD, GitHub link of the code and DB Script->Notepad)
+https://github.com/abhisheksethiya19/EcommerceShoppinStore.git
+
+2.Training Assignments
+https://github.com/abhisheksethiya19/Trainingassignments.git
+
+3.Bench Assignments
+https://github.com/abhisheksethiya19/SwapTwoNumApp.git
+
+
+4.Bench Assignments(Tejas)-Azure
+Azure Paas Deployment: - https://ecommerceshoppingstoremvc.azurewebsites.net
+AKS deployment: - Remaining
+
+5.Case Study Enhancement->
+Tried to add payment options other than COD in checkout.
+
+6.Upskilling 
+a)Debugging In C# and Angular
+b)CAF Test
+c)Azure VM Creation and download Visual Studio and SSMS.
+
+7.One Page Resume
+https://github.com/abhisheksethiya19/Resume.git
