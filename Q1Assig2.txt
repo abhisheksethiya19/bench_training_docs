@@ -1,0 +1,185 @@
+CREATE Database BUSSEVA;
+
+USE Database BUSSEVA;
+
+CREATE TABLE [dbo].[BusInfo] (
+    [BusID]      INT           IDENTITY (1, 1) NOT NULL,
+    [BoardingPoint]       NVARCHAR (30) NULL,
+    [TravelDate]      DATETIME (20) NULL,
+    [Amount] MONEY      NULL,
+    PRIMARY KEY CLUSTERED ([BusID] ASC)
+)
+----------------------------------
+
+//-----Stored Procedure----
+
+CREATE PROCEDURE BUS AS
+AS
+SELECT * FROM BusInfo
+GO;
+exec BUS;
+
+//---------Retrive all boarding point and travelDate for the amount>450--------
+
+select boardingPoint,travelDate 
+from BusInfo
+where Amount>450;
+
+//---------Create View Bus_View to display the BusID, BoardingPoint whose rating is greater than 3------
+
+CREATE VIEW BusView
+SELECT BusID,BoardingPoint
+FROM BusInfo
+WHERE Rating >3;
+
+select * from [BusView]
+
+//---------Retrieve all the BusID, DroppingPoint for the bus travelled on 10-12-2017---------
+
+select * from BusInfo
+where BusID,DroppingPoint on 10-12-2017;
+
+
+----------------------------------------------------------------------------------------------
+--------------------------------//StoredProcedure//-------------------------------------------
+----------------------------------------------------------------------------------------------
+
+ALTER PROCEDURE Masterinsertupdatedelete (@busid            INTEGER,
+                                          @boarding_point    VARCHAR(10),
+                                          @travel_date     VARCHAR(10),
+                                          @amount        DECIMAL(10, 2),
+                                          //@city          VARCHAR(20),
+                                          //@StatementType NVARCHAR(20) = '')
+AS
+  BEGIN
+      IF @StatementType = 'Insert'
+        BEGIN
+            INSERT INTO businfo
+                        (busid,
+                         boarding_point,
+                         travel_date,
+                         amount,
+                         //city)
+            VALUES     ( @busid,
+                         @boarding_point,
+                         @travel_date,
+                         @amount,
+                         //@city)
+        END
+
+      IF @StatementType = 'Select'
+        BEGIN
+            SELECT *
+            FROM   businfo
+        END
+
+      IF @StatementType = 'Update'
+        BEGIN
+            UPDATE businfo
+            SET    boarding_point = @boarding_point,
+                   travel_date = @travel_date,
+                   amount = @amount
+                   //city = @city
+            WHERE  busid = @busid
+        END
+      ELSE IF @StatementType = 'Delete'
+        BEGIN
+            DELETE FROM businfo
+            WHERE  busid = @busid
+        END
+  END
+=================================================================
+=================================================================
+------------------------C# Code----------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.SqlClient;
+
+namespace BusInformation
+{
+    public class BusInfo
+    {
+        static void Main(string[] args)
+        {
+
+            Connection();
+
+        }
+        static void Connection()
+        {
+            string cs = "Data Source=BUSSEVA; Initial Catalog=BUSSEVA;Integrated Security=True";
+            SqlConnection con=new SqlConnection(cs);
+            {
+
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand("select boardingPoint,travelDate from BusInfo where Amount>450", con);
+                SqlDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+                Console.WriteLine("Results are---");
+
+                while (dr.Read())
+                {
+                    Console.WriteLine("BusID=" + dr[0] + "    " + "BoardingPoint=" + dr[1] + "    " + "TravelDate=" + dr[2]);
+                    
+                }
+                Console.WriteLine("-------------------------------------------------------------------------");
+                Console.WriteLine("Press Enter To View busid, boardingpoint whose rating> 3");
+                Console.ReadKey();
+               
+                con.Close();
+                
+
+                {
+                    con.Open();
+                    /*  
+                    CREATE VIEW BusView  AS
+                    SELECT BusID,BoardingPoint
+                    FROM BusInfo
+                    WHERE Rating>3;*/ // using Sql query to create MatchView
+
+                    //Create View Bus_View to display the BusID, BoardingPoint whose rating is greater than 3
+                    
+                    SqlCommand cmd1 = new SqlCommand("select * from [BusView]", con);
+                    SqlDataReader dr1 = cmd1.ExecuteReader();
+                    dr1.Read();
+                    Console.WriteLine("Displaying BusId, BoardingPoint---");
+
+                    while (dr1.Read())
+                    {
+                        Console.WriteLine("BusId=" + dr1[0] + "    " + "BoardingPoint=" + dr1[1]);
+
+                    }
+                    Console.WriteLine("-------------------------------------------------------------------------");
+                    Console.WriteLine("Press Enter To View all BusID, DroppingPoint for the bus travelled on 10-12-2017");
+                    Console.ReadKey();
+                    con.Close();
+                }
+
+                {
+                    con.Open();
+
+                    // Retrieve the details of all BusID, DroppingPoint for the bus travelled on 10-12-201  
+                    SqlCommand cmd2 = new SqlCommand("select * from BusInfo where BusID, DroppingPoint for the bus travelled on 10-12-2017 ", con);
+                    SqlDataReader dr2 = cmd2.ExecuteReader();
+                    dr2.Read();
+                    Console.WriteLine("Displaying all BusID, DroppingPoint for the bus travelled on 10-12-2017 ---");
+
+                    while (dr2.Read())
+                    {
+                        Console.WriteLine("BusID=" + dr2[0] +"    " +"DroppingPoint=" + dr2[1] + "    " )
+
+                    }
+                    
+                    Console.ReadKey();
+                    con.Close();
+                }
+
+
+            }
+        }
+    }
+}
